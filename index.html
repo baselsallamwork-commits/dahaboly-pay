@@ -109,6 +109,53 @@ animation:fly .6s cubic-bezier(.2,.8,.3,1.2);direction:ltr}
 .onb .acts2 svg{width:28px;height:28px}
 .codechip{font:800 40px Montserrat,sans-serif;letter-spacing:10px;background:var(--card);border:2px dashed #E9A952;border-radius:18px;padding:10px 18px 10px 28px;direction:ltr}
 .avs{display:flex;justify-content:center;margin-top:18px;direction:ltr}.avs .av{margin-inline:-6px;border:3px solid var(--bg);width:52px;height:52px;font-size:20px}
+
+/* bank screen */
+.bk{max-width:1280px;margin:0 auto;padding:0 0 30px}
+.bkh{background:#4CC2C4;color:#fff;border-radius:0 0 26px 26px;padding:14px clamp(14px,3vw,28px) 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:relative;overflow:hidden}
+.bkh .pt{position:absolute;right:-40px;top:-30px;width:180px;opacity:.15}
+.bkh .l{display:flex;align-items:center;gap:14px;position:relative}
+.bkh .l img{height:44px}
+.bkh .l b{font:800 clamp(18px,3vw,26px) Montserrat,sans-serif;letter-spacing:2px;border-inline-start:2px solid #fff8;padding-inline-start:14px}
+.bkh .c{position:relative;text-align:center;direction:ltr}
+.bkh .c small{display:block;font:700 11px Montserrat,sans-serif;letter-spacing:2px;opacity:.85}
+.bkh .c span{font:800 clamp(28px,6vw,44px)/1 Montserrat,sans-serif;letter-spacing:8px;color:#133347}
+.bkh .r{display:flex;gap:6px;position:relative}
+.bkh .r button{background:#ffffff2e;color:#fff;border-radius:12px;padding:8px 12px;font-weight:700;min-height:40px;font-size:14px}
+.bkg{display:grid;gap:16px;padding:16px clamp(12px,2.5vw,24px) 0;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){.bkg{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px}
+.box h3{margin:0 0 10px;font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:baseline}
+.box h3 small{color:var(--mute);font-weight:600;font-size:13px}
+.last{border-radius:20px;padding:16px;color:#fff;background:#133347;display:flex;align-items:center;gap:14px;min-height:110px}
+.last.pop{animation:pop2 .6s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes pop2{from{transform:scale(.92);opacity:.3}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.last.pop{animation:none}}
+.last .t{flex:1}.last .t div:first-child{font-size:clamp(17px,2.6vw,22px);font-weight:800}
+.last .t div+div{opacity:.8;font-size:14px}
+.last .amt{font:800 clamp(28px,5vw,42px) Montserrat,sans-serif;color:#E9A952}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stats div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px}
+.stats small{display:block;color:var(--mute);font-size:13px;font-weight:600}
+.stats b{font:800 clamp(18px,3vw,26px) Montserrat,sans-serif;direction:ltr;display:block}
+.lb{display:flex;flex-direction:column;gap:10px}
+.lbr{display:flex;align-items:center;gap:12px;border-radius:16px;padding:10px 12px;color:#fff;position:relative;overflow:hidden}
+.lbr.teal{background:linear-gradient(118deg,#0b6f71,#1d8c8d 45%,#4fb0b1)}.lbr.gold{background:linear-gradient(118deg,#b9741f,#d99536 45%,#efbd6e)}
+.lbr .rk{font:800 22px Montserrat,sans-serif;width:28px;text-align:center;opacity:.9}
+.lbr .av{border:2px solid #fff}
+.lbr .t{flex:1}.lbr .t div:first-child{font-weight:800;font-size:18px}
+.lbr .t div+div{font-size:13px;opacity:.9}
+.lbr .m{text-align:end;direction:ltr}.lbr .m b{display:block;font:800 clamp(20px,3.4vw,28px) Montserrat,sans-serif}
+.lbr .m small{font-size:12px;opacity:.9}
+.own{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.ot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);min-height:72px;display:flex;flex-direction:column}
+.ot i{height:9px;display:block}
+.ot .n{font-size:12px;font-weight:700;padding:6px 8px 2px;line-height:1.25;flex:1}
+.ot .o{display:flex;align-items:center;gap:6px;padding:4px 8px 7px;font-size:12px;color:var(--mute)}
+.ot .o .av{width:20px;height:20px;font-size:11px}
+.ot.sold{border-color:#E9A952}
+.bkfeed .row{padding:9px 4px}
+.bkin{margin-top:16px}
 .hero .ccard{margin:6px auto 0;max-width:360px;text-align:left}
 .acts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px 4px;margin:18px 0}
 .act{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;line-height:1.25;font-weight:700;text-align:center;min-height:44px}
@@ -261,7 +308,7 @@ fSend:'{a} حوّل لـ {b}',fBuy:'{a} اشترى {p}',fRent:'{a} دفع إيج
 undo:'تراجع',undone:'اترجعت',you:'انت',leave:'اخرج من اللعبة',noProps:'لسه ماشتريتش حاجة',worth:'قيمة الأملاك',share:'ابعت الكود ده لصحابك عشان يدخلوا',
 noDb:'التطبيق مش متوصّل بالداتابيز. اتأكد من إعدادات Firebase والنت.',noWrite:'مش قادر يحفظ. اتأكد من قواعد Firestore.',
 notFound:'الكود ده مش موجود',full:'اللعبة مليانة (٨ لاعبين)',needName:'اكتب اسمك',loading:'بيحمّل…',slow:'الاتصال بطيء، ثواني…',copy:'نسخ',copied:'اتنسخ',
-reqSent:'طلب',skip:'تخطي',nextS:'التالي',letsPlay:'يلا نلعب',howTo:'شرح التطبيق',o1t:'بنك دهابولي في جيبك',o1p:'بدل البنكنوت الورق، كل لاعب ليه كارت ورصيد على موبايله.',o2t:'حوّل واقبض في ثانية',o2p:'ادفع إيجار، اشتري أماكن، اقبض مرتب GO، واسحب كروت فرصة وصندوق المجتمع.',o3t:'العب مع صحابك',o3p:'ابدأ لعبة وابعت الكود لصحابك. كل العمليات بتوصل للكل في نفس اللحظة.',tapSkip:'دوس في أي حتة للتخطي',chance:'فرصة',chest:'صندوق المجتمع',draw:'اسحب كارت',apply:'نفّذ',ok:'تمام',cardColor:'لون الكارت',yourName:'اسمك',cardDone:'تم تنفيذ الكارت',reqOf:'طلب من {a}',buyFor:'اشتري {p} بـ {m}',rentT:'إيجار {p}',me:'(انت)',hostNote:'الأرصدة باينة للكل زي اللعبة الحقيقية'},
+reqSent:'طلب',bankScr:'شاشة البنك',bankHint:'للموبايل أو التابلت اللي في نص الترابيزة: بيعرض كل حاجة لحظة بلحظة.',openBank:'افتح شاشة البنك',bankT:'BANK',lastTx:'آخر عملية',lead:'ترتيب اللاعبين',ownT:'ملكية الأماكن',cashIn:'الفلوس مع اللاعبين',toBank:'اتدفع للبنك',txN:'عدد العمليات',cash:'كاش',worthL:'الثروة',full:'شاشة كاملة',exitB:'خروج',free:'متاحة',joinCode:'ادخل بالكود ده',awake:'الشاشة مش هتطفي',resumeT:'عندك لعبة شغالة',resume:'كمّل',skip:'تخطي',nextS:'التالي',letsPlay:'يلا نلعب',howTo:'شرح التطبيق',o1t:'بنك دهابولي في جيبك',o1p:'بدل البنكنوت الورق، كل لاعب ليه كارت ورصيد على موبايله.',o2t:'حوّل واقبض في ثانية',o2p:'ادفع إيجار، اشتري أماكن، اقبض مرتب GO، واسحب كروت فرصة وصندوق المجتمع.',o3t:'العب مع صحابك',o3p:'ابدأ لعبة وابعت الكود لصحابك. كل العمليات بتوصل للكل في نفس اللحظة.',tapSkip:'دوس في أي حتة للتخطي',chance:'فرصة',chest:'صندوق المجتمع',draw:'اسحب كارت',apply:'نفّذ',ok:'تمام',cardColor:'لون الكارت',yourName:'اسمك',cardDone:'تم تنفيذ الكارت',reqOf:'طلب من {a}',buyFor:'اشتري {p} بـ {m}',rentT:'إيجار {p}',me:'(انت)',hostNote:'الأرصدة باينة للكل زي اللعبة الحقيقية'},
 en:{brand:'Dahaboly <b>Pay</b>',lang:'ع',welcome:'Dahaboly money on your phone',intro:'No more banknotes: every player gets an account to send, collect and pay rent in a second.',
 name:'Your name in the game',start:'Starting balance per player',create:'Start a new game',orj:'or join a game',code:'Game code',join:'Join',
 balance:'Your balance',gcode:'Game code',send:'Send',req:'Request',collect:'Collect from bank',paybank:'Pay bank',buy:'Buy',rent:'Pay rent',players:'Players',props:'My properties',
@@ -275,7 +322,7 @@ fSend:'{a} sent {b}',fBuy:'{a} bought {p}',fRent:'{a} paid {b} rent for {p}',fCo
 undo:'Undo',undone:'Reversed',you:'You',leave:'Leave game',noProps:'You have not bought anything yet',worth:'Property value',share:'Send this code to your friends so they can join',
 noDb:'The app is not connected to its database. Check the Firebase settings and your connection.',noWrite:'Could not save. Check the Firestore rules.',
 notFound:'That code does not exist',full:'The game is full (8 players)',needName:'Enter your name',loading:'Loading…',slow:'Slow connection, a few seconds…',copy:'Copy',copied:'Copied',
-reqSent:'Request',skip:'Skip',nextS:'Next',letsPlay:'Let’s play',howTo:'How it works',o1t:'The Dahaboly bank in your pocket',o1p:'No more paper money: every player gets a card and a balance on their phone.',o2t:'Send and collect in a second',o2p:'Pay rent, buy places, collect your GO salary, and draw Chance and Community Chest cards.',o3t:'Play with your friends',o3p:'Start a game and send the code to your friends. Every transaction reaches everyone instantly.',tapSkip:'Tap anywhere to skip',chance:'Chance',chest:'Community Chest',draw:'Draw a card',apply:'Apply',ok:'OK',cardColor:'Card colour',yourName:'YOUR NAME',cardDone:'Card applied',reqOf:'Request from {a}',buyFor:'Buy {p} for {m}',rentT:'Rent for {p}',me:'(you)',hostNote:'Balances are visible to everyone, like the real game'}};
+reqSent:'Request',bankScr:'Bank screen',bankHint:'For the phone or tablet in the middle of the table: shows everything live.',openBank:'Open bank screen',bankT:'BANK',lastTx:'Last transaction',lead:'Leaderboard',ownT:'Property ownership',cashIn:'Cash with players',toBank:'Paid to bank',txN:'Transactions',cash:'cash',worthL:'net worth',full:'Full screen',exitB:'Exit',free:'For sale',joinCode:'Join with this code',awake:'Screen stays on',resumeT:'You have a game in progress',resume:'Continue',skip:'Skip',nextS:'Next',letsPlay:'Let’s play',howTo:'How it works',o1t:'The Dahaboly bank in your pocket',o1p:'No more paper money: every player gets a card and a balance on their phone.',o2t:'Send and collect in a second',o2p:'Pay rent, buy places, collect your GO salary, and draw Chance and Community Chest cards.',o3t:'Play with your friends',o3p:'Start a game and send the code to your friends. Every transaction reaches everyone instantly.',tapSkip:'Tap anywhere to skip',chance:'Chance',chest:'Community Chest',draw:'Draw a card',apply:'Apply',ok:'OK',cardColor:'Card colour',yourName:'YOUR NAME',cardDone:'Card applied',reqOf:'Request from {a}',buyFor:'Buy {p} for {m}',rentT:'Rent for {p}',me:'(you)',hostNote:'Balances are visible to everyone, like the real game'}};
 
 // ---------- state ----------
 const S={lang:'ar',db:null,user:null,uid:null,canWrite:true,code:null,game:null,players:{},tx:[],reqs:[],hide:false,tab:'all',ready:false,slow:false,err:''};
@@ -314,8 +361,9 @@ async function boot(){
   let id=lsGet('dp_id');if(!id){id='p'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);lsSet('dp_id',id)}
   S.uid=id;
   const code=lsGet('dp_code');
-  if(code){try{await enter(code,true)}catch(e){}}
+  if(code){try{const g=await db.doc(`games/${code.toUpperCase()}`).get();if(g.exists){S.lastCode=code.toUpperCase();const me=await db.doc(`games/${S.lastCode}/players/${S.uid}`).get();S.lastName=me.exists?me.data().name:''}else saveProfile('')}catch(e){}}
   S.ready=true;render();
+  if(location.hash==='#bank'&&lsGet('dp_bank')){try{await openBank(lsGet('dp_bank'))}catch(e){}}
 }
 function saveProfile(code){lsSet('dp_code',code||'')}
 
@@ -323,7 +371,7 @@ async function enter(code,silent){
   code=code.toUpperCase().trim();
   const g=await S.db.doc(`games/${code}`).get();
   if(!g.exists){if(!silent){S.err=t('notFound');render()}else saveProfile('');return false}
-  S.code=code;S.game=g.data();subscribe();saveProfile(code);return true;
+  S.code=code;S.game=g.data();subscribe();if(!S.bankOpening)saveProfile(code);return true;
 }
 function subscribe(){
   unsub.forEach(u=>u());unsub=[];S.slow=false;clearTimeout(slowTimer);
@@ -377,6 +425,7 @@ function render(){
   if(!S.ready){app.innerHTML=top+`<div class="empty">${S.err?esc(S.err):t('loading')}</div>`;return}
   if(!S.db||!S.uid){app.innerHTML=top+hero()+`<div class="panel">${esc(S.err||t('noDb'))}</div>`;return}
   if(!S.code){app.innerHTML=top+hero()+joinForm();return}
+  if(S.bank){app.innerHTML=bankView();return}
   app.innerHTML=top+home();
 }
 
@@ -384,7 +433,7 @@ function showSplash(){
   const el=document.createElement('div');el.className='splash';el.setAttribute('role','presentation');
   el.innerHTML=`<span class="ring"></span><div class="in"><img class="mk" src="${IMG.MARKC}" alt="Dahaboly"><div class="wd">${'DAHABOLY'.split('').map((c,i)=>`<span style="animation-delay:${.35+i*.05}s">${c}</span>`).join('')}<b><span style="animation-delay:.85s">PAY</span></b></div><img class="ar" src="${IMG.ARD}" alt=""></div><button class="skip">${t('tapSkip')}</button>`;
   document.body.appendChild(el);
-  const done=()=>{if(el.dataset.d)return;el.dataset.d=1;el.classList.add('out');setTimeout(()=>el.remove(),500);if(!lsGet('dp_onb'))showOnb()};
+  const done=()=>{if(el.dataset.d)return;el.dataset.d=1;el.classList.add('out');setTimeout(()=>el.remove(),500);if(!lsGet('dp_onb')&&!S.bank&&location.hash!=='#bank')showOnb()};
   el.addEventListener('click',done);
   setTimeout(done,matchMedia('(prefers-reduced-motion: reduce)').matches?900:2600);
 }
@@ -412,6 +461,46 @@ function showOnb(){
     if(cur>=sl.length-1)return close();
     go(cur+1)});
 }
+
+function txLine(x){
+  const pr=x.prop?pn(PK[x.prop]||{en:x.prop,ar:x.prop}):'',b=pname(x.to);
+  return ({send:t('fSend',{a:pname(x.from),b}),reqpay:t('fSend',{a:pname(x.from),b}),buy:t('fBuy',{a:pname(x.from),p:pr}),rent:t('fRent',{a:pname(x.from),b,p:pr}),
+    collect:t('fCol',{a:pname(x.to)}),pay:t('fPay',{a:pname(x.from)}),undo:t('fUndo',{a:pname(x.by)})}[x.kind]||'');
+}
+let wakeLock=null;
+async function keepAwake(){try{if('wakeLock' in navigator&&S.bank&&document.visibilityState==='visible'){wakeLock=await navigator.wakeLock.request('screen')}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(S.bank)keepAwake()});
+function bankView(){
+  const bal=balances(),o=owners(),u=undoneSet();
+  const own={};for(const k in o)(own[o[k]]=own[o[k]]||[]).push(PK[k]);
+  const worth=id=>(bal[id]||0)+(own[id]||[]).reduce((s,p)=>s+p.p,0);
+  const ids=Object.keys(S.players).sort((a,b)=>worth(b)-worth(a));
+  const cashIn=ids.reduce((s,id)=>s+(bal[id]||0),0);
+  const toBank=S.tx.filter(x=>x.to==='bank'&&!u.has(x.id)).reduce((s,x)=>s+x.amount,0)-S.tx.filter(x=>x.kind==='undo'&&x.from==='bank').reduce((s,x)=>s+x.amount,0);
+  const lx=S.tx.find(x=>x.kind!=='undo');
+  let pop='';if(lx&&lx.id!==S.bankLast){pop='pop';S.bankLast=lx.id}
+  const last=lx?`<div class="last ${pop}">${av(lx.kind==='collect'?lx.to:lx.from,52)}<div class="t"><div>${txLine(lx)}</div><div>${new Date(lx.ts).toLocaleTimeString(S.lang==='ar'?'ar-EG':'en-GB',{hour:'2-digit',minute:'2-digit'})}${lx.note?' · '+fmt(lx.note):''}</div></div><div class="amt">${money(lx.amount)}</div></div>`
+    :`<div class="last"><div class="t"><div>${t('noTx')}</div></div></div>`;
+  const lb=ids.map((id,i)=>{const p=S.players[id];return `<div class="lbr ${p.card==='gold'?'gold':'teal'}"><span class="rk">${i+1}</span>${av(id,42)}<div class="t"><div>${esc(p.name)}</div><div>${(own[id]||[]).length} · ${t('props')}</div></div><div class="m"><b>${money(bal[id]||0)}</b><small>${t('worthL')} ${money(worth(id))}</small></div></div>`}).join('')||`<div class="empty">${t('joinCode')}: ${esc(S.code)}</div>`;
+  const tiles=P.map(p=>`<div class="ot ${o[p.k]?'sold':''}"><i style="background:${GC[p.g]}"></i><div class="n">${esc(pn(p))}</div><div class="o">${o[p.k]?av(o[p.k],20)+pname(o[p.k]):t('free')+' · '+money(p.p)}</div></div>`).join('');
+  const fd=S.tx.slice(0,25).map(x=>`<div class="row">${av(x.kind==='collect'?x.to:x.from,34)}<div class="t"><div>${txLine(x)}</div><div class="s">${new Date(x.ts).toLocaleTimeString(S.lang==='ar'?'ar-EG':'en-GB',{hour:'2-digit',minute:'2-digit'})}${x.note?' · '+fmt(x.note):''}${u.has(x.id)?' · '+t('undone'):''}</div></div><div class="amt" style="${u.has(x.id)?'text-decoration:line-through;opacity:.6':''}">${money(x.amount)}</div></div>`).join('')||`<div class="empty">${t('noTx')}</div>`;
+  return `<div class="bk"><header class="bkh"><img class="pt" src="${IMG.MARKW}" alt=""><div class="l"><img src="${IMG.LOGO}" alt="Dahab City"><b>${t('bankT')}</b></div>
+    <div class="c"><small>GAME CODE</small><span>${esc(S.code)}</span></div>
+    <div class="r"><button data-a="lang">${t('lang')}</button><button data-a="fs">${t('full')}</button><button data-a="bankexit">${t('exitB')}</button></div></header>
+  ${S.slow?`<div class="note">${t('slow')}</div>`:''}
+  <div class="bkg"><div style="display:flex;flex-direction:column;gap:16px">${last}
+    <div class="stats"><div><small>${t('cashIn')}</small><b>${money(cashIn)}</b></div><div><small>${t('toBank')}</small><b>${money(Math.max(0,toBank))}</b></div><div><small>${t('txN')}</small><b>${S.tx.length}</b></div></div>
+    <div class="box"><h3>${t('lead')}<small>${ids.length} · ${t('players')}</small></h3><div class="lb">${lb}</div></div>
+    <div class="box bkfeed"><h3>${t('feed')}</h3><div class="list" style="border:0">${fd}</div></div></div>
+    <div class="box"><h3>${t('ownT')}<small>${Object.keys(o).length}/${P.length}</small></h3><div class="own">${tiles}</div></div></div>
+  <div class="note">${t('awake')}</div></div>`;
+}
+async function openBank(code){
+  code=(code||'').toUpperCase().trim();
+  if(code.length<4){S.err=t('notFound');render();return}
+  S.bankOpening=true;const ok=await enter(code);S.bankOpening=false;if(!ok)return;
+  S.bank=true;lsSet('dp_bank',code);document.querySelector('.wrap').style.maxWidth='none';document.querySelector('.wrap').style.padding='0';keepAwake();render();
+}
 function cardHTML(name,bal,code,style,hide,showEye){
   return `<div class="ccard ${style==='gold'?'gold':'teal'}"><img class="pat" src="${IMG.MARKW}" alt=""><img class="pat2" src="${IMG.MARKW}" alt="">
   <img class="lg" src="${IMG.LOGO}" alt="Dahab City"><img class="ard" src="${IMG.ARD}" alt="">
@@ -424,13 +513,14 @@ function hero(){return `<div class="hero">${cardHTML(t('yourName'),S.game?.start
 function heroOld(){return `<div class="hero"><svg class="logo" viewBox="0 0 120 120"><rect x="14" y="26" width="92" height="62" rx="14" fill="#4CB8B4"/><circle cx="92" cy="30" r="22" fill="#E9A952"/><rect x="26" y="66" width="40" height="8" rx="4" fill="#fff" opacity=".85"/><rect x="26" y="42" width="22" height="14" rx="3" fill="#F2B92F"/><circle cx="60" cy="98" r="0"/></svg><h1>${t('welcome')}</h1><p>${t('intro')}</p></div>`}
 function joinForm(){
   const w=S.canWrite?'':`<div class="banner">${t('noWrite')}</div>`;
-  return `${w}<div class="panel"><label class="field"><span>${t('name')}</span><input id="nm" maxlength="16" autocomplete="nickname"></label>
+  const resume=S.lastCode?`<div class="panel" style="display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-weight:800">${t('resumeT')}</div><div class="s" style="color:var(--mute);font-size:14px">${t('gcode')}: <b class="num" style="letter-spacing:2px">${esc(S.lastCode)}</b>${S.lastName?' · '+esc(S.lastName):''}</div></div><button class="btn or sm" data-a="resume">${t('resume')}</button></div>`:'';
+  return `${w}${resume}<div class="panel"><label class="field"><span>${t('name')}</span><input id="nm" maxlength="16" autocomplete="nickname"></label>
   <label class="field"><span>${t('start')}</span><input id="st" inputmode="numeric" value="1500"></label>
   <button class="btn or wide" data-a="create" ${S.canWrite?'':'disabled'}>${t('create')}</button>
   <div class="or-row">${t('orj')}</div>
   <label class="field"><span>${t('code')}</span><input id="cd" maxlength="4" autocapitalize="characters" style="letter-spacing:6px;text-transform:uppercase;text-align:center;font-weight:800"></label>
   <button class="btn wide" data-a="join" ${S.canWrite?'':'disabled'}>${t('join')}</button>
-  <div class="err">${esc(S.err)}</div></div><div style="text-align:center;margin-top:14px"><button class="chip" data-a="howto">${t('howTo')}</button></div>`;
+  <div class="err">${esc(S.err)}</div></div><div class="panel bkin"><div style="font-weight:800;font-size:18px">${t('bankScr')}</div><p class="s" style="color:var(--mute);margin:4px 0 10px">${t('bankHint')}</p><label class="field"><span>${t('code')}</span><input id="bc" maxlength="4" autocapitalize="characters" style="letter-spacing:6px;text-transform:uppercase;text-align:center;font-weight:800" value="${esc(lsGet('dp_bank')||'')}"></label><button class="btn wide" style="background:#4CC2C4;color:#133347" data-a="bankmode">${t('openBank')}</button></div><div style="text-align:center;margin-top:14px"><button class="chip" data-a="howto">${t('howTo')}</button></div>`;
 }
 function home(){
   const bal=balances(),me=S.players[S.uid],mb=bal[S.uid]??0;
@@ -546,6 +636,10 @@ document.addEventListener('click',async ev=>{
   if(a==='lang'){S.lang=S.lang==='ar'?'en':'ar';try{localStorage.setItem('dp_lang',S.lang)}catch(e){}setLang();render();if(F.k)sheetFor();return}
   if(a==='close'){closeSheet();return}
   if(a==='howto'){showOnb();return}
+  if(a==='bankmode'){b.disabled=true;S.err='';try{await openBank($('#bc').value)}catch(e){writeErr(e)}b.disabled=false;return}
+  if(a==='bankexit'){S.bank=false;unsub.forEach(u=>u());unsub=[];S.code=null;S.game=null;S.players={};S.tx=[];S.reqs=[];try{wakeLock&&wakeLock.release()}catch(e){};const w=document.querySelector('.wrap');w.style.maxWidth='';w.style.padding='';try{document.fullscreenElement&&document.exitFullscreen()}catch(e){};render();return}
+  if(a==='fs'){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}return}
+  if(a==='resume'){b.disabled=true;try{await enter(S.lastCode)}catch(e){writeErr(e)}render();return}
   if(a==='hide'){S.hide=!S.hide;try{localStorage.setItem('dp_hide',S.hide?'1':'0')}catch(e){}render();return}
   if(a==='tab'){S.tab=b.dataset.v;render();return}
   if(a==='copy'){try{await navigator.clipboard.writeText(S.code);toast(t('copied'))}catch(e){toast(S.code)}return}
@@ -554,7 +648,7 @@ document.addEventListener('click',async ev=>{
     S.err='';b.disabled=true;
     try{if(a==='create'){const st=Math.max(100,parseInt($('#st').value,10)||1500);await createGame(name,st)}else{const c=$('#cd').value;if(c.trim().length<4){S.err=t('notFound');render();return}await joinGame(name,c)}}
     catch(e){writeErr(e)}render();return}
-  if(a==='leave'){unsub.forEach(u=>u());unsub=[];S.code=null;S.game=null;S.players={};S.tx=[];S.reqs=[];saveProfile('');render();return}
+  if(a==='leave'){unsub.forEach(u=>u());unsub=[];S.code=null;S.game=null;S.players={};S.tx=[];S.reqs=[];saveProfile('');S.lastCode=null;render();return}
   if(a.startsWith('f_')){if(!S.canWrite&&!['f_players','f_props'].includes(a)){toast(t('noWrite'));return}startFlow(a.slice(2));return}
   if(a==='pickp'){readNote();F.to=b.dataset.id;F.err='';sheetFor();return}
   if(a==='key'){readNote();const v=b.dataset.v;let s=String(F.amt||'');s=v==='⌫'?s.slice(0,-1):(s+v).slice(0,6);F.amt=parseInt(s,10)||0;F.err='';sheetFor();return}
