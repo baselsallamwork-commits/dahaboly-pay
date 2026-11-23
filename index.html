@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dahaboly Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: playful game-night banking, confident and quick, like a real wallet app.
+IDEA: an InstaPay-style wallet for the Dahaboly board — a bank card in your pocket.
+PICTURE: the teal Dahaboly card with your balance, big, then round action buttons.
+COLOUR and TYPE: board orange ground, teal card, navy ink, group colours on properties; Tajawal.
+LAYOUT: one phone-width column; bottom sheets for every flow; live feed below.
+*/
+:root{color-scheme:light dark;
+--bg:light-dark(#f6efe4,#0d1b24);--ink:light-dark(#102937,#f3ece1);--mute:light-dark(#5d6b73,#9fb0b8);
+--card:light-dark(#fff,#15293a);--line:light-dark(#eadfce,#243b4d);--or:#E69F43;--tl:#4CB8B4;--nv:#102937;--rd:#C0392B;--gr:#2E9E5B}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Tajawal,system-ui,sans-serif;overflow-x:clip}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--tl);outline-offset:2px}
+.wrap{max-width:480px;margin:0 auto;padding:16px 16px 40px;min-height:100vh}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.brand{font-weight:800;font-size:22px;letter-spacing:.3px}.brand b{color:var(--or)}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:700;font-size:14px;min-height:36px}
+.bank{position:relative;border-radius:24px;padding:20px;color:#fff;overflow:hidden;
+background:linear-gradient(135deg,#4CB8B4 0%,#2f8f8b 55%,#1d6764 100%);box-shadow:0 14px 30px -14px #1d676499}
+.bank:before{content:"";position:absolute;inset-inline-end:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:#E69F43;opacity:.9}
+.bank:after{content:"";position:absolute;inset-inline-end:40px;bottom:-90px;width:180px;height:180px;border-radius:50%;border:22px solid #ffffff22}
+.bank>*{position:relative}
+.bank .who{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.bank .lbl{opacity:.85;font-size:14px;margin-top:18px}
+.bal{font-size:clamp(38px,11vw,48px);font-weight:800;line-height:1.05;display:flex;align-items:center;gap:10px;direction:ltr;justify-content:flex-end}
+[dir=ltr] .bal{justify-content:flex-start}
+.eye{width:40px;height:40px;border-radius:50%;background:#ffffff26;display:grid;place-items:center}
+.code{margin-top:16px;display:flex;justify-content:space-between;font-size:14px;opacity:.95}
+.code b{letter-spacing:3px;font-size:16px}
+.acts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+.act{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;font-weight:700;text-align:center;min-height:44px}
+.act i{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);font-style:normal}
+.act svg{width:26px;height:26px}
+.banner{background:#E69F43;color:#102937;border-radius:16px;padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:center;justify-content:space-between;font-weight:700}
+.banner .b2{display:flex;gap:6px;flex:none}
+.btn{background:light-dark(#102937,#f3ece1);color:light-dark(#fff,#102937);border-radius:14px;padding:12px 18px;font-weight:800;min-height:48px}
+.btn.or{background:#E69F43;color:#102937}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:6px 12px;min-height:38px;font-size:14px;border-radius:10px}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.45}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 8px}
+.sec h2{font-size:18px;margin:0;font-weight:800}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);padding:4px;border-radius:14px;margin-top:8px}
+.tabs button{flex:1;padding:8px;border-radius:10px;font-weight:700;min-height:40px;font-size:14px}
+.tabs .on{background:light-dark(#102937,#f3ece1);color:light-dark(#fff,#102937)}
+.list{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;flex:none;font-size:17px}
+.row .t{flex:1}.row .t div:first-child{font-weight:700}
+.row .s{font-size:13px;color:var(--mute)}
+.amt{font-weight:800;direction:ltr;white-space:nowrap}.amt.p{color:var(--gr)}.amt.m{color:var(--rd)}
+.undo{font-size:13px;color:var(--tl);font-weight:800;padding:4px 0;min-height:32px}
+.empty{padding:22px;text-align:center;color:var(--mute)}
+.sw{width:10px;align-self:stretch;border-radius:4px;flex:none}
+/* sheet */
+.scrim{position:fixed;inset:0;background:#0009;display:none;z-index:20}
+.scrim.on{display:block}
+.sheet{position:fixed;inset-inline:0;bottom:0;margin:0 auto;max-width:480px;background:var(--bg);border-radius:24px 24px 0 0;z-index:21;
+max-height:92vh;overflow:auto;transform:translateY(105%);transition:transform .25s ease;padding:10px 18px 24px}
+.sheet.on{transform:none}
+@media (prefers-reduced-motion:reduce){.sheet{transition:none}}
+.grab{width:44px;height:5px;border-radius:9px;background:var(--line);margin:4px auto 12px}
+.sheet h3{margin:0 0 12px;font-size:20px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+.x{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--line);font-size:20px}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}
+.pick button{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;font-size:14px;min-height:44px}
+.pick button.on{border-color:var(--tl);background:light-dark(#e8f6f5,#173a44)}
+.big{font-size:44px;font-weight:800;text-align:center;direction:ltr;margin:6px 0;min-height:60px}
+.big small{font-size:22px;color:var(--mute)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;direction:ltr;margin:8px 0 12px}
+.pad button{background:var(--card);border:1px solid var(--line);border-radius:14px;font-size:24px;font-weight:700;min-height:56px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.presets button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:700;min-height:40px;font-size:14px}
+.presets button.on{background:light-dark(#102937,#f3ece1);color:light-dark(#fff,#102937);border-color:transparent}
+.field{display:block;margin:10px 0}
+.field span{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
+.field input{width:100%;font-size:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);min-height:48px}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px;margin:10px 0 14px}
+.sum div{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);gap:10px}
+.sum div:first-child{border-top:0}.sum span{color:var(--mute)}
+.ok{text-align:center;padding:10px 0}
+.ok .ck{width:92px;height:92px;border-radius:50%;background:var(--gr);display:grid;place-items:center;margin:10px auto 12px;animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.ok .ck{animation:none}}
+.err{color:var(--rd);font-weight:700;min-height:24px;margin:4px 0}
+.plist{display:flex;flex-direction:column;gap:8px}
+.prop{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 12px;text-align:start;min-height:52px;width:100%}
+.prop.on{border-color:var(--tl)}
+.prop .n{flex:1;font-weight:700}.prop .p{font-weight:800;direction:ltr}
+.hero{text-align:center;padding:28px 0 8px}
+.hero h1{font-size:40px;line-height:1.05;margin:10px 0 6px;font-weight:800}
+.hero p{color:var(--mute);margin:0 auto;max-width:34ch}
+.logo{width:120px;height:120px;margin:0 auto;position:relative}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:16px}
+.or-row{display:flex;align-items:center;gap:10px;color:var(--mute);margin:14px 0;font-size:14px}.or-row:before,.or-row:after{content:"";flex:1;height:1px;background:var(--line)}
+.toast{position:fixed;bottom:18px;inset-inline:0;margin:0 auto;width:max-content;max-width:90vw;background:var(--nv);color:#fff;padding:10px 16px;border-radius:12px;font-weight:700;z-index:40;display:none}
+.note{font-size:13px;color:var(--mute);text-align:center;margin-top:18px}
+.num{direction:ltr;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="empty">…</div></div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast"></div>
+<script>
+// ====== PUT YOUR FIREBASE CONFIG HERE ======
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBLGHEZ-XnU7pBPGCwND-yrdZHzgrU0uLg",
+  authDomain: "dahaboly-pay.firebaseapp.com",
+  projectId: "dahaboly-pay",
+  storageBucket: "dahaboly-pay.firebasestorage.app",
+  messagingSenderId: "1018149602225",
+  appId: "1:1018149602225:web:9765413225b0809eae3390"
+};
+// ===========================================
+</script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,onSnapshot,collection,addDoc,getDocs} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const wrapD=s=>({id:s.id,exists:s.exists(),data:()=>s.data()});
+const wrapC=s=>({docs:s.docs.map(wrapD),size:s.size,empty:s.empty});
+let api=null;
+try{
+  if(window.FIREBASE_CONFIG){
+    const fs=getFirestore(initializeApp(window.FIREBASE_CONFIG));
+    const D=p=>{const r=doc(fs,p);return{id:r.id,path:p,get:async()=>wrapD(await getDoc(r)),set:d=>setDoc(r,d),update:d=>updateDoc(r,d),onSnapshot:(n,e)=>onSnapshot(r,s=>n(wrapD(s)),e)}};
+    const C=p=>{const r=collection(fs,p);return{path:p,doc:id=>D(p+'/'+id),add:async d=>D(p+'/'+(await addDoc(r,d)).id),get:async()=>wrapC(await getDocs(r)),onSnapshot:(n,e)=>onSnapshot(r,s=>n(wrapC(s)),e)}};
+    api={doc:D,collection:C};
+  }
+}catch(e){console.error(e)}
+window.__fbReady(api);
+</script>
+<script>
+{
+// ---------- data ----------
+const GC={1:'#B07A4F',2:'#F2B92F',3:'#E0607E',4:'#5FA845',5:'#4CB8B4',6:'#8B3628',7:'#102937',8:'#2468A8',st:'#5d6b73',ut:'#8B3628'};
+const P=[
+['abu','Abu Galum','أبو جالوم',60,1,[2,10,30,90,160,250],50],['can','The Canyon','الكانيون',60,1,[4,20,60,180,320,450],50],
+['gha','Ghazala Camp','كامب غزالة',100,2,[6,30,90,270,400,550],50],['dd','Dahab Days Camp','كامب دهب دايز',100,2,[6,30,90,270,400,550],50],['nl','New Life Camp','كامب نيو لايف',120,2,[8,40,100,300,450,600],50],
+['po','Planet Oasis Resort','منتجع بلانيت أوازيس',140,3,[10,50,150,450,625,750],100],['si','Swiss Inn Resort Dahab','منتجع سويس إن دهب',140,3,[10,50,150,450,625,750],100],['ac','Acacia Dahab Hotel','فندق أكاسيا دهب',160,3,[12,60,180,500,700,900],100],
+['ya','Yasmina Camp','كامب ياسمينة',180,4,[14,70,200,550,750,950],100],['dp','Dahab Paradise Camp','كامب دهب بارادايس',180,4,[14,70,200,550,750,950],100],['sh','Seven Heaven Camp','كامب سيفن هيفن',200,4,[16,80,220,600,800,1000],100],
+['mt','Mount Tawilat','جبل الطويلات',220,5,[18,90,250,700,875,1050],150],['cc','Coloured Canyon','الوادي الملوّن',220,5,[18,90,250,700,875,1050],150],['wg','Wadi Gnai','وادي قناي',240,5,[20,100,300,750,925,1100],150],
+['eg','Eel Garden','إيل جاردن',260,6,[22,110,330,800,975,1150],150],['lr','Lighthouse Reef','شعاب الفنار',260,6,[22,110,330,800,975,1150],150],['ws','Wadi Star','وادي ستار',280,6,[24,120,360,850,1025,1200],150],
+['lm','Le Méridien Dahab Resort','منتجع لو ميريديان دهب',300,7,[26,130,390,900,1100,1275],200],['tr','Tropitel Dahab Oasis','تروبيتيل دهب أوازيس',300,7,[26,130,390,900,1100,1275],200],['ww','Wadi Weshwash','وادي وشواش',320,7,[28,150,450,1000,1200,1400],200],
+['bl','Blue Lagoon','البلو لاجون',350,8,[35,175,500,1100,1300,1500],200],['bh','Blue Hole','البلو هول',400,8,[50,200,600,1400,1700,2000],200],
+['s1','El Masbat Station','محطة المسبط',200,'st'],['s2','Assalah Station','محطة العصلة',200,'st'],['s3','Lighthouse Area Station','محطة منطقة الفنار',200,'st'],['s4','El Mashraba Station','محطة المشربة',200,'st'],
+['u1','Electric Company','شركة الكهرباء',150,'ut'],['u2','Water Works','شركة المياه',150,'ut']
+].map(a=>({k:a[0],en:a[1],ar:a[2],p:a[3],g:a[4],r:a[5],h:a[6]}));
+const PK=Object.fromEntries(P.map(p=>[p.k,p]));
+const PCOL=['#E69F43','#4CB8B4','#E0607E','#2468A8','#5FA845','#8B3628','#7A5AA6','#102937'];
+
+const T={
+ar:{brand:'دهابولي <b>باي</b>',lang:'EN',welcome:'فلوس دهابولي على موبايلك',intro:'بدل البنكنوت: كل لاعب ليه حساب، يحوّل ويقبض ويدفع إيجار في ثانية.',
+name:'اسمك في اللعبة',start:'رصيد البداية لكل لاعب',create:'ابدأ لعبة جديدة',orj:'أو ادخل لعبة موجودة',code:'كود اللعبة',join:'ادخل',
+balance:'رصيدك',gcode:'كود اللعبة',send:'تحويل',req:'اطلب فلوس',collect:'اقبض من البنك',paybank:'ادفع للبنك',buy:'اشتري',rent:'ادفع إيجار',players:'اللاعبين',props:'أملاكي',
+feed:'آخر العمليات',all:'الكل',mine:'عملياتي',noTx:'لسه مفيش عمليات. ابدأوا اللعب!',to:'لمين؟',amount:'المبلغ',note:'ملاحظة (اختياري)',next:'التالي',confirm:'تأكيد',
+confirmT:'تأكيد العملية',from:'من',toL:'إلى',done:'تم',okT:'العملية تمت بنجاح',bank:'البنك',low:'رصيدك مش كفاية',chooseP:'اختار لاعب',enterA:'اكتب المبلغ',
+go:'مرتب GO',inc:'ضريبة الدخل',sup:'ضريبة كبيرة',jail:'غرامة السجن',house:'بناء بيت',other:'مبلغ تاني',freeP:'جايزة',
+whichProp:'أنهي مكان؟',noFree:'كل الأماكن اتباعت',price:'السعر',owner:'صاحبه',level:'إيه اللي مبني عليه؟',empty:'أرض فاضية',h1:'بيت',h2:'٢ بيوت',h3:'٣ بيوت',h4:'٤ بيوت',hotel:'فندق',
+fullset:'المجموعة كلها معاه: الإيجار ×٢',dice:'مجموع الزهر',stN:'معاه {n} محطات',utN:'معاه {n} مرافق: ×{m} الزهر',noRent:'مفيش أماكن لحد تاني لسه',
+reqFrom:'{a} طالب منك {m}',pay:'ادفع',decline:'رفض',cancel:'إلغاء',waiting:'مستني {a} يدفع {m}',sentReq:'الطلب اتبعت',
+fSend:'{a} حوّل لـ {b}',fBuy:'{a} اشترى {p}',fRent:'{a} دفع إيجار {p} لـ {b}',fCol:'{a} قبض من البنك',fPay:'{a} دفع للبنك',fUndo:'{a} رجّع عملية',
+undo:'تراجع',undone:'اترجعت',you:'انت',leave:'اخرج من اللعبة',noProps:'لسه ماشتريتش حاجة',worth:'قيمة الأملاك',share:'ابعت الكود ده لصحابك عشان يدخلوا',
+noDb:'التطبيق مش متوصّل بالداتابيز. اتأكد من إعدادات Firebase والنت.',noWrite:'مش قادر يحفظ. اتأكد من قواعد Firestore.',
+notFound:'الكود ده مش موجود',full:'اللعبة مليانة (٨ لاعبين)',needName:'اكتب اسمك',loading:'بيحمّل…',slow:'الاتصال بطيء، ثواني…',copy:'نسخ',copied:'اتنسخ',
+reqSent:'طلب',reqOf:'طلب من {a}',buyFor:'اشتري {p} بـ {m}',rentT:'إيجار {p}',me:'(انت)',hostNote:'الأرصدة باينة للكل زي اللعبة الحقيقية'},
+en:{brand:'Dahaboly <b>Pay</b>',lang:'ع',welcome:'Dahaboly money on your phone',intro:'No more banknotes: every player gets an account to send, collect and pay rent in a second.',
+name:'Your name in the game',start:'Starting balance per player',create:'Start a new game',orj:'or join a game',code:'Game code',join:'Join',
+balance:'Your balance',gcode:'Game code',send:'Send',req:'Request',collect:'Collect from bank',paybank:'Pay bank',buy:'Buy',rent:'Pay rent',players:'Players',props:'My properties',
+feed:'Recent activity',all:'All',mine:'Mine',noTx:'No transactions yet. Start playing!',to:'To whom?',amount:'Amount',note:'Note (optional)',next:'Next',confirm:'Confirm',
+confirmT:'Confirm',from:'From',toL:'To',done:'Done',okT:'Transaction complete',bank:'Bank',low:'Not enough balance',chooseP:'Choose a player',enterA:'Enter an amount',
+go:'GO salary',inc:'Income tax',sup:'Super tax',jail:'Jail fine',house:'Build a house',other:'Other amount',freeP:'Prize',
+whichProp:'Which property?',noFree:'Everything is sold',price:'Price',owner:'Owner',level:'What is built on it?',empty:'Empty land',h1:'1 house',h2:'2 houses',h3:'3 houses',h4:'4 houses',hotel:'Hotel',
+fullset:'Owner has the full set: rent ×2',dice:'Dice total',stN:'Owns {n} stations',utN:'Owns {n} utilities: ×{m} dice',noRent:'Nobody else owns anything yet',
+reqFrom:'{a} requests {m} from you',pay:'Pay',decline:'Decline',cancel:'Cancel',waiting:'Waiting for {a} to pay {m}',sentReq:'Request sent',
+fSend:'{a} sent {b}',fBuy:'{a} bought {p}',fRent:'{a} paid {b} rent for {p}',fCol:'{a} collected from bank',fPay:'{a} paid the bank',fUndo:'{a} reversed a transaction',
+undo:'Undo',undone:'Reversed',you:'You',leave:'Leave game',noProps:'You have not bought anything yet',worth:'Property value',share:'Send this code to your friends so they can join',
+noDb:'The app is not connected to its database. Check the Firebase settings and your connection.',noWrite:'Could not save. Check the Firestore rules.',
+notFound:'That code does not exist',full:'The game is full (8 players)',needName:'Enter your name',loading:'Loading…',slow:'Slow connection, a few seconds…',copy:'Copy',copied:'Copied',
+reqSent:'Request',reqOf:'Request from {a}',buyFor:'Buy {p} for {m}',rentT:'Rent for {p}',me:'(you)',hostNote:'Balances are visible to everyone, like the real game'}};
+
+// ---------- state ----------
+const S={lang:'ar',db:null,user:null,uid:null,canWrite:true,code:null,game:null,players:{},tx:[],reqs:[],hide:false,tab:'all',ready:false,slow:false,err:''};
+try{S.lang=localStorage.getItem('dp_lang')||'ar';S.hide=localStorage.getItem('dp_hide')==='1'}catch(e){}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const t=(k,v={})=>(T[S.lang][k]??k).replace(/\{(\w+)\}/g,(_,x)=>v[x]??'');
+const money=n=>`<bdi dir="ltr">${Number(n).toLocaleString("en-US")}$</bdi>`;
+const pn=p=>S.lang==='ar'?p.ar:p.en;
+const safe=id=>String(id).replace(/[^A-Za-z0-9_\-.~:@+]/g,'_').slice(0,120);
+let unsub=[],slowTimer=null;
+
+function setLang(){document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='ar'?'rtl':'ltr'}
+function toast(m){const el=$('#toast');el.textContent=m;el.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>el.style.display='none',2200)}
+
+// ---------- derived ----------
+function undoneSet(){return new Set(S.tx.filter(x=>x.kind==='undo').map(x=>x.ref))}
+function balances(){const b={};const st=S.game?.start||1500;for(const id in S.players)b[id]=st;
+  for(const x of S.tx){if(x.from!=='bank'&&x.from in b)b[x.from]-=x.amount;if(x.to!=='bank'&&x.to in b)b[x.to]+=x.amount}return b}
+function owners(){const o={};const u=undoneSet();for(const x of [...S.tx].sort((a,b)=>a.ts-b.ts)){if(x.kind==='buy'&&x.prop&&!u.has(x.id))o[x.prop]=x.from}return o}
+function pname(id){if(id==='bank')return t('bank');const p=S.players[id];return p?esc(p.name):'?'}
+function pcol(id){return id==='bank'?'#E69F43':(S.players[id]?.color||'#5d6b73')}
+function av(id,sz=40){const n=id==='bank'?'$':(S.players[id]?.name||'?').trim().charAt(0).toUpperCase();return `<span class="av" style="background:${pcol(id)};width:${sz}px;height:${sz}px">${esc(n)}</span>`}
+
+// ---------- boot ----------
+let fbResolve;const fbP=new Promise(r=>fbResolve=r);window.__fbReady=api=>fbResolve(api);
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+async function boot(){
+  setLang();render();
+  const timer=setTimeout(()=>{if(!S.db){S.err=t('noDb');S.ready=true;render()}},10000);
+  const db=await fbP;clearTimeout(timer);
+  S.db=db;
+  if(!db){S.err=t('noDb');S.ready=true;render();return}
+  let id=lsGet('dp_id');if(!id){id='p'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);lsSet('dp_id',id)}
+  S.uid=id;
+  const code=lsGet('dp_code');
+  if(code){try{await enter(code,true)}catch(e){}}
+  S.ready=true;render();
+}
+function saveProfile(code){lsSet('dp_code',code||'')}
+
+async function enter(code,silent){
+  code=code.toUpperCase().trim();
+  const g=await S.db.doc(`games/${code}`).get();
+  if(!g.exists){if(!silent){S.err=t('notFound');render()}else saveProfile('');return false}
+  S.code=code;S.game=g.data();subscribe();saveProfile(code);return true;
+}
+function subscribe(){
+  unsub.forEach(u=>u());unsub=[];S.slow=false;clearTimeout(slowTimer);
+  slowTimer=setTimeout(()=>{S.slow=true;render()},10000);
+  const g=`games/${S.code}`,fail=e=>{clearTimeout(slowTimer);if(e?.code==='revoked'){S.err=t('noDb')}render()};
+  unsub.push(S.db.doc(g).onSnapshot(s=>{if(s.exists)S.game=s.data();render()},fail));
+  unsub.push(S.db.collection(g+'/players').onSnapshot(s=>{S.players={};s.docs.forEach(d=>S.players[d.id]=d.data());clearTimeout(slowTimer);S.slow=false;render()},fail));
+  unsub.push(S.db.collection(g+'/tx').onSnapshot(s=>{S.tx=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.ts-a.ts);render()},fail));
+  unsub.push(S.db.collection(g+'/req').onSnapshot(s=>{S.reqs=s.docs.map(d=>({id:d.id,...d.data()})).filter(r=>r.status==='open');render()},fail));
+}
+
+async function writeErr(e){if(e?.code==='permission-denied'||e?.code==='invalid_argument'){toast(t('noWrite'))}else if(e?.code==='quota_exceeded')toast(e.message);else toast('⚠ '+(e?.message||'error'));render()}
+
+async function createGame(name,start){
+  const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let code;
+  for(let i=0;i<6;i++){code=Array.from({length:4},()=>A[Math.floor(Math.random()*A.length)]).join('');const g=await S.db.doc(`games/${code}`).get();if(!g.exists)break}
+  await S.db.doc(`games/${code}`).set({code,start,host:S.uid,createdAt:Date.now()});
+  await S.db.doc(`games/${code}/players/${S.uid}`).set({name,color:PCOL[0],joinedAt:Date.now()});
+  await enter(code);
+}
+async function joinGame(name,code){
+  code=code.toUpperCase().trim();
+  const g=await S.db.doc(`games/${code}`).get();if(!g.exists){S.err=t('notFound');render();return}
+  const ps=await S.db.collection(`games/${code}/players`).get();
+  let me=ps.docs.find(d=>d.id===S.uid);
+  if(!me){const same=ps.docs.find(d=>(d.data().name||'').trim().toLowerCase()===name.trim().toLowerCase());if(same){S.uid=same.id;lsSet('dp_id',same.id);me=same}}
+  if(!me){if(ps.size>=8){S.err=t('full');render();return}
+    const used=new Set(ps.docs.map(d=>d.data().color));const color=PCOL.find(c=>!used.has(c))||PCOL[ps.size%8];
+    await S.db.doc(`games/${code}/players/${S.uid}`).set({name,color,joinedAt:Date.now()})}
+  await enter(code);
+}
+async function addTx(x){await S.db.collection(`games/${S.code}/tx`).add({...x,by:S.uid,ts:Date.now()})}
+
+// ---------- render ----------
+const ICON={
+send:'<svg viewBox="0 0 24 24" fill="none" stroke="#E69F43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>',
+req:'<svg viewBox="0 0 24 24" fill="none" stroke="#4CB8B4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5M11 6l-6 6 6 6"/></svg>',
+collect:'<svg viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2.2" stroke-linecap="round"><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>',
+paybank:'<svg viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h4"/></svg>',
+buy:'<svg viewBox="0 0 24 24" fill="none" stroke="#2468A8" stroke-width="2.2" stroke-linejoin="round"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M10 20v-5h4v5"/></svg>',
+rent:'<svg viewBox="0 0 24 24" fill="none" stroke="#8B3628" stroke-width="2.2" stroke-linecap="round"><circle cx="8" cy="14" r="4"/><path d="M11 11l8-8M16 6l3 3M14 8l2 2"/></svg>',
+players:'<svg viewBox="0 0 24 24" fill="none" stroke="#102937" stroke-width="2.2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c1.8.7 3 2.4 3.5 5.2"/></svg>',
+props:'<svg viewBox="0 0 24 24" fill="none" stroke="#E69F43" stroke-width="2.2" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M8 12h8M8 16h5"/></svg>'};
+const EYE=o=>o?'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>':'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.9 8.4 2 12 2 12s3.6 7 10 7a9.6 9.6 0 0 0 5.4-1.6"/></svg>';
+
+function render(){
+  const app=$('#app');
+  const top=`<div class="top"><div class="brand">${t('brand')}</div><button class="chip" data-a="lang">${t('lang')}</button></div>`;
+  if(!S.ready){app.innerHTML=top+`<div class="empty">${S.err?esc(S.err):t('loading')}</div>`;return}
+  if(!S.db||!S.uid){app.innerHTML=top+hero()+`<div class="panel">${esc(S.err||t('noDb'))}</div>`;return}
+  if(!S.code){app.innerHTML=top+hero()+joinForm();return}
+  app.innerHTML=top+home();
+}
+function hero(){return `<div class="hero"><svg class="logo" viewBox="0 0 120 120"><rect x="14" y="26" width="92" height="62" rx="14" fill="#4CB8B4"/><circle cx="92" cy="30" r="22" fill="#E69F43"/><rect x="26" y="66" width="40" height="8" rx="4" fill="#fff" opacity=".85"/><rect x="26" y="42" width="22" height="14" rx="3" fill="#F2B92F"/><circle cx="60" cy="98" r="0"/></svg><h1>${t('welcome')}</h1><p>${t('intro')}</p></div>`}
+function joinForm(){
+  const w=S.canWrite?'':`<div class="banner">${t('noWrite')}</div>`;
+  return `${w}<div class="panel"><label class="field"><span>${t('name')}</span><input id="nm" maxlength="16" autocomplete="nickname"></label>
+  <label class="field"><span>${t('start')}</span><input id="st" inputmode="numeric" value="1500"></label>
+  <button class="btn or wide" data-a="create" ${S.canWrite?'':'disabled'}>${t('create')}</button>
+  <div class="or-row">${t('orj')}</div>
+  <label class="field"><span>${t('code')}</span><input id="cd" maxlength="4" autocapitalize="characters" style="letter-spacing:6px;text-transform:uppercase;text-align:center;font-weight:800"></label>
+  <button class="btn wide" data-a="join" ${S.canWrite?'':'disabled'}>${t('join')}</button>
+  <div class="err">${esc(S.err)}</div></div>`;
+}
+function home(){
+  const bal=balances(),me=S.players[S.uid],mb=bal[S.uid]??0;
+  if(!me)return `<div class="empty">${t('loading')}</div>`;
+  const reqIn=S.reqs.filter(r=>r.to===S.uid),reqOut=S.reqs.filter(r=>r.from===S.uid);
+  const banners=reqIn.map(r=>`<div class="banner"><span>${t('reqFrom',{a:pname(r.from),m:money(r.amount)})}${r.note?' · '+esc(r.note):''}</span><span class="b2"><button class="btn sm" data-a="payreq" data-id="${r.id}">${t('pay')}</button><button class="btn sm ghost" data-a="decl" data-id="${r.id}">${t('decline')}</button></span></div>`).join('')
+   +reqOut.map(r=>`<div class="banner" style="background:var(--card);color:var(--ink);border:1px solid var(--line)"><span>${t('waiting',{a:pname(r.to),m:money(r.amount)})}</span><button class="btn sm ghost" data-a="decl" data-id="${r.id}">${t('cancel')}</button></div>`).join('');
+  const acts=['send','req','collect','paybank','buy','rent','players','props'].map(k=>`<button class="act" data-a="f_${k}"><i>${ICON[k]}</i>${t(k)}</button>`).join('');
+  const w=S.canWrite?'':`<div class="banner">${t('noWrite')}</div>`;
+  const slow=S.slow?`<div class="note">${t('slow')}</div>`:'';
+  return `${w}<div class="bank"><div class="who"><span>${esc(me.name)}</span><span>DAHABOLY</span></div>
+  <div class="lbl">${t('balance')}</div><div class="bal"><span>${S.hide?'•••••':money(mb)}</span><button class="eye" data-a="hide" aria-label="hide">${EYE(!S.hide)}</button></div>
+  <div class="code"><span>${t('gcode')}</span><button data-a="copy" style="color:#fff"><b>${S.code}</b></button></div></div>
+  ${slow}${banners}<div class="acts">${acts}</div>
+  <div class="sec"><h2>${t('feed')}</h2></div>
+  <div class="tabs"><button class="${S.tab==='all'?'on':''}" data-a="tab" data-v="all">${t('all')}</button><button class="${S.tab==='mine'?'on':''}" data-a="tab" data-v="mine">${t('mine')}</button></div>
+  <div class="list" style="margin-top:10px">${feed()}</div>
+  <div class="note">${t('hostNote')}</div>
+  <div style="text-align:center;margin-top:10px"><button class="chip" data-a="leave">${t('leave')}</button></div>`;
+}
+function feed(){
+  const u=undoneSet();let xs=S.tx;
+  if(S.tab==='mine')xs=xs.filter(x=>x.from===S.uid||x.to===S.uid);
+  xs=xs.slice(0,60);
+  if(!xs.length)return `<div class="empty">${t('noTx')}</div>`;
+  return xs.map(x=>{
+    const pr=x.prop?pn(PK[x.prop]||{en:x.prop,ar:x.prop}):'';
+    const a=pname(x.by===x.from||x.from!=='bank'?x.from:x.to),b=pname(x.to);
+    let line={send:t('fSend',{a:pname(x.from),b}),reqpay:t('fSend',{a:pname(x.from),b}),buy:t('fBuy',{a:pname(x.from),p:pr}),rent:t('fRent',{a:pname(x.from),b,p:pr}),
+      collect:t('fCol',{a:pname(x.to)}),pay:t('fPay',{a:pname(x.from)}),undo:t('fUndo',{a:pname(x.by)})}[x.kind]||'';
+    const sign=x.to===S.uid?'p':x.from===S.uid?'m':'';
+    const who=x.kind==='collect'?x.to:x.from;
+    const age=Date.now()-x.ts,canU=x.by===S.uid&&x.kind!=='undo'&&!u.has(x.id)&&age<180000&&S.canWrite;
+    const tm=new Date(x.ts).toLocaleTimeString(S.lang==='ar'?'ar-EG':'en-GB',{hour:'2-digit',minute:'2-digit'});
+    return `<div class="row">${av(who)}<div class="t"><div>${line}</div><div class="s">${tm}${x.note?' · '+esc(x.note):''}${u.has(x.id)?' · '+t('undone'):''}${canU?` · <button class="undo" data-a="undo" data-id="${x.id}">${t('undo')}</button>`:''}</div></div>
+    <div class="amt ${sign}" style="${u.has(x.id)?'text-decoration:line-through;opacity:.6':''}">${sign==='p'?'+':sign==='m'?'−':''}${money(x.amount)}</div></div>`}).join('');
+}
+
+// ---------- sheets ----------
+let F={};
+function openSheet(h){$('#sheet').innerHTML=`<div class="grab"></div>${h}`;$('#sheet').classList.add('on');$('#scrim').classList.add('on')}
+function closeSheet(){$('#sheet').classList.remove('on');$('#scrim').classList.remove('on');F={}}
+const head=k=>`<h3><span>${k}</span><button class="x" data-a="close" aria-label="close">×</button></h3>`;
+function others(){return Object.keys(S.players).filter(id=>id!==S.uid).sort((a,b)=>S.players[a].joinedAt-S.players[b].joinedAt)}
+function pickPlayers(){const o=others();return `<div class="pick">${o.map(id=>`<button class="${F.to===id?'on':''}" data-a="pickp" data-id="${id}">${av(id,44)}<span>${pname(id)}</span></button>`).join('')}</div>`}
+function pad(){return `<div class="big">${F.amt?money(F.amt):'<small>0$</small>'}</div><div class="pad">${[1,2,3,4,5,6,7,8,9,'00',0,'⌫'].map(k=>`<button data-a="key" data-v="${k}">${k}</button>`).join('')}</div>`}
+function presets(list){return `<div class="presets">${list.map(([lbl,v,n])=>`<button class="${F.amt===v&&F.note===n?'on':''}" data-a="pre" data-v="${v}" data-n="${esc(n)}">${lbl} · ${money(v)}</button>`).join('')}</div>`}
+function noteField(){return `<label class="field"><span>${t('note')}</span><input id="nt" maxlength="40" value="${esc(F.note||'')}"></label>`}
+
+function sheetFor(){
+  const k=F.k;
+  if(F.step==='ok')return openSheet(`<div class="ok"><div class="ck"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h3 style="justify-content:center">${F.okMsg||t('okT')}</h3><div class="big">${money(F.amt)}</div>${F.okSub?`<p>${F.okSub}</p>`:''}<button class="btn or wide" data-a="close">${t('done')}</button></div>`);
+  if(F.step==='confirm')return openSheet(head(t('confirmT'))+`<div class="sum"><div><span>${t('from')}</span><b>${pname(F.from)}</b></div><div><span>${t('toL')}</span><b>${pname(F.to)}</b></div>${F.prop?`<div><span>${t('whichProp')}</span><b>${esc(pn(PK[F.prop]))}</b></div>`:''}<div><span>${t('amount')}</span><b>${money(F.amt)}</b></div>${F.note?`<div><span>${t('note')}</span><b>${esc(F.note)}</b></div>`:''}</div><div class="err">${esc(F.err||'')}</div><button class="btn or wide" data-a="doit">${t('confirm')}</button>`);
+  if(k==='send'||k==='req'){
+    return openSheet(head(t(k))+`<div class="field"><span>${t('to')}</span></div>${pickPlayers()}${pad()}${noteField()}<div class="err">${esc(F.err||'')}</div><button class="btn or wide" data-a="next">${t('next')}</button>`)}
+  if(k==='collect'){return openSheet(head(t('collect'))+presets([[t('go'),200,t('go')],[t('freeP'),100,t('freeP')],[t('freeP'),50,t('freeP')]])+pad()+noteField()+`<div class="err">${esc(F.err||'')}</div><button class="btn or wide" data-a="next">${t('next')}</button>`)}
+  if(k==='paybank'){return openSheet(head(t('paybank'))+presets([[t('inc'),200,t('inc')],[t('sup'),100,t('sup')],[t('jail'),50,t('jail')],[t('house'),50,t('house')],[t('house'),100,t('house')],[t('house'),150,t('house')],[t('house'),200,t('house')]])+pad()+noteField()+`<div class="err">${esc(F.err||'')}</div><button class="btn or wide" data-a="next">${t('next')}</button>`)}
+  if(k==='buy'){const o=owners();const free=P.filter(p=>!o[p.k]);
+    return openSheet(head(t('buy'))+(free.length?`<div class="plist">${free.map(p=>`<button class="prop ${F.prop===p.k?'on':''}" data-a="pickprop" data-id="${p.k}"><span class="sw" style="background:${GC[p.g]}"></span><span class="n">${esc(pn(p))}</span><span class="p">${money(p.p)}</span></button>`).join('')}</div>`:`<div class="empty">${t('noFree')}</div>`)+`<div class="err">${esc(F.err||'')}</div>`)}
+  if(k==='rent'){const o=owners();const theirs=P.filter(p=>o[p.k]&&o[p.k]!==S.uid);
+    if(!F.prop)return openSheet(head(t('rent'))+(theirs.length?`<div class="plist">${theirs.map(p=>`<button class="prop" data-a="pickrent" data-id="${p.k}"><span class="sw" style="background:${GC[p.g]}"></span><span class="n">${esc(pn(p))}<div class="s" style="font-weight:500;color:var(--mute);font-size:13px">${t('owner')}: ${pname(o[p.k])}</div></span>${av(o[p.k],32)}</button>`).join('')}</div>`:`<div class="empty">${t('noRent')}</div>`));
+    const p=PK[F.prop],own=o[F.prop];let body='';
+    if(p.g==='st'){const n=P.filter(q=>q.g==='st'&&o[q.k]===own).length;F.amt=[25,50,100,200][n-1];body=`<p>${t('stN',{n})}</p>`}
+    else if(p.g==='ut'){const n=P.filter(q=>q.g==='ut'&&o[q.k]===own).length,m=n>1?10:4;F.amt=(F.dice||0)*m;body=`<p>${t('utN',{n,m})}</p><label class="field"><span>${t('dice')}</span><input id="dc" inputmode="numeric" maxlength="2" value="${F.dice||''}"></label>`}
+    else{const set=P.filter(q=>q.g===p.g).every(q=>o[q.k]===own);const lv=F.lv??0;const opts=[t('empty'),t('h1'),t('h2'),t('h3'),t('h4'),t('hotel')];
+      F.amt=lv===0?p.r[0]*(set?2:1):p.r[lv];
+      body=`${set?`<p><b>${t('fullset')}</b></p>`:''}<div class="field"><span>${t('level')}</span></div><div class="presets">${opts.map((l,i)=>`<button class="${lv===i?'on':''}" data-a="lv" data-v="${i}">${l} · ${money(i===0?p.r[0]*(set?2:1):p.r[i])}</button>`).join('')}</div>`}
+    return openSheet(head(t('rentT',{p:esc(pn(p))}))+`<div class="sum"><div><span>${t('owner')}</span><b>${pname(own)}</b></div></div>${body}<div class="big">${money(F.amt||0)}</div><div class="err">${esc(F.err||'')}</div><button class="btn or wide" data-a="rentnext">${t('next')}</button>`)}
+  if(k==='players'){const bal=balances(),o=owners();const ids=Object.keys(S.players).sort((a,b)=>bal[b]-bal[a]);
+    return openSheet(head(t('players'))+`<div class="list">${ids.map(id=>{const n=Object.values(o).filter(x=>x===id).length;return `<div class="row">${av(id)}<div class="t"><div>${pname(id)} ${id===S.uid?t('me'):''}</div><div class="s">${n} · ${t('props')}</div></div><div class="amt">${money(bal[id])}</div></div>`}).join('')}</div><div class="note">${t('share')}: <b class="num" style="letter-spacing:3px">${S.code}</b></div>`)}
+  if(k==='props'){const o=owners();const mine=P.filter(p=>o[p.k]===S.uid);const v=mine.reduce((s,p)=>s+p.p,0);
+    return openSheet(head(t('props'))+(mine.length?`<div class="sum"><div><span>${t('worth')}</span><b>${money(v)}</b></div></div><div class="plist">${mine.map(p=>`<div class="prop"><span class="sw" style="background:${GC[p.g]}"></span><span class="n">${esc(pn(p))}</span><span class="p">${money(p.p)}</span></div>`).join('')}</div>`:`<div class="empty">${t('noProps')}</div>`))}
+}
+function readNote(){const n=$('#nt');if(n)F.note=n.value.trim()}
+function startFlow(k){F={k,amt:0,note:'',err:''};sheetFor()}
+
+function validate(){
+  const bal=balances();
+  if(F.k==='send'||F.k==='req'){if(!F.to)return t('chooseP')}
+  if(!F.amt||F.amt<=0)return t('enterA');
+  if(F.from&&F.from!=='bank'&&F.k!=='req'&&bal[F.from]<F.amt)return t('low');
+  return '';
+}
+function toConfirm(){
+  readNote();
+  if(F.k==='send'){F.from=S.uid}
+  if(F.k==='req'){F.from=S.uid}
+  if(F.k==='collect'){F.from='bank';F.to=S.uid}
+  if(F.k==='paybank'){F.from=S.uid;F.to='bank'}
+  F.err=validate();if(F.err)return sheetFor();
+  if(F.k==='req'){F.reqTo=F.to;F.to=S.uid;F.from=F.reqTo}
+  F.step='confirm';sheetFor();
+}
+async function doit(){
+  if(F.busy)return;F.busy=true;
+  try{
+    if(F.k==='req'){await S.db.collection(`games/${S.code}/req`).add({from:S.uid,to:F.reqTo,amount:F.amt,note:F.note||'',status:'open',ts:Date.now()});F.okMsg=t('sentReq')}
+    else if(F.k==='payreq'){const bal=balances();if(bal[S.uid]<F.amt){F.err=t('low');F.busy=false;return sheetFor()}
+      await addTx({from:S.uid,to:F.to,amount:F.amt,note:F.note||'',kind:'reqpay'});await S.db.doc(`games/${S.code}/req/${F.rid}`).update({status:'paid'})}
+    else{const bal=balances();if(F.from!=='bank'&&bal[F.from]<F.amt){F.err=t('low');F.busy=false;return sheetFor()}
+      await addTx({from:F.from,to:F.to,amount:F.amt,note:F.note||'',kind:F.k==='paybank'?'pay':F.k,prop:F.prop||null})}
+    F.step='ok';F.busy=false;sheetFor();
+  }catch(e){F.busy=false;closeSheet();writeErr(e)}
+}
+
+// ---------- events ----------
+document.addEventListener('click',async ev=>{
+  const b=ev.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+  if(a==='lang'){S.lang=S.lang==='ar'?'en':'ar';try{localStorage.setItem('dp_lang',S.lang)}catch(e){}setLang();render();if(F.k)sheetFor();return}
+  if(a==='close'){closeSheet();return}
+  if(a==='hide'){S.hide=!S.hide;try{localStorage.setItem('dp_hide',S.hide?'1':'0')}catch(e){}render();return}
+  if(a==='tab'){S.tab=b.dataset.v;render();return}
+  if(a==='copy'){try{await navigator.clipboard.writeText(S.code);toast(t('copied'))}catch(e){toast(S.code)}return}
+  if(a==='create'||a==='join'){
+    const name=$('#nm').value.trim();if(!name){S.err=t('needName');render();return}
+    S.err='';b.disabled=true;
+    try{if(a==='create'){const st=Math.max(100,parseInt($('#st').value,10)||1500);await createGame(name,st)}else{const c=$('#cd').value;if(c.trim().length<4){S.err=t('notFound');render();return}await joinGame(name,c)}}
+    catch(e){writeErr(e)}render();return}
+  if(a==='leave'){unsub.forEach(u=>u());unsub=[];S.code=null;S.game=null;S.players={};S.tx=[];S.reqs=[];saveProfile('');render();return}
+  if(a.startsWith('f_')){if(!S.canWrite&&!['f_players','f_props'].includes(a)){toast(t('noWrite'));return}startFlow(a.slice(2));return}
+  if(a==='pickp'){readNote();F.to=b.dataset.id;F.err='';sheetFor();return}
+  if(a==='key'){readNote();const v=b.dataset.v;let s=String(F.amt||'');s=v==='⌫'?s.slice(0,-1):(s+v).slice(0,6);F.amt=parseInt(s,10)||0;F.err='';sheetFor();return}
+  if(a==='pre'){F.amt=+b.dataset.v;F.note=b.dataset.n;F.err='';sheetFor();return}
+  if(a==='next'){toConfirm();return}
+  if(a==='pickprop'){const p=PK[b.dataset.id];F.prop=p.k;F.amt=p.p;F.from=S.uid;F.to='bank';F.note='';F.err=validate();if(F.err)return sheetFor();F.step='confirm';sheetFor();return}
+  if(a==='pickrent'){F.prop=b.dataset.id;F.lv=0;sheetFor();return}
+  if(a==='lv'){F.lv=+b.dataset.v;sheetFor();return}
+  if(a==='rentnext'){const dc=$('#dc');if(dc){F.dice=parseInt(dc.value,10)||0;sheetFor()}
+    const o=owners();F.from=S.uid;F.to=o[F.prop];F.err=validate();if(F.err)return sheetFor();F.step='confirm';sheetFor();return}
+  if(a==='doit'){doit();return}
+  if(a==='payreq'){const r=S.reqs.find(x=>x.id===b.dataset.id);if(!r)return;F={k:'payreq',rid:r.id,from:S.uid,to:r.from,amt:r.amount,note:r.note||t('reqSent'),step:'confirm'};sheetFor();return}
+  if(a==='decl'){try{await S.db.doc(`games/${S.code}/req/${b.dataset.id}`).update({status:'closed'})}catch(e){writeErr(e)}return}
+  if(a==='undo'){const x=S.tx.find(y=>y.id===b.dataset.id);if(!x)return;try{await addTx({from:x.to,to:x.from,amount:x.amount,note:'',kind:'undo',ref:x.id})}catch(e){writeErr(e)}return}
+});
+$('#scrim').addEventListener('click',closeSheet);
+document.addEventListener('input',e=>{if(e.target.id==='dc'){F.dice=parseInt(e.target.value,10)||0;const o=owners();const own=o[F.prop];const n=P.filter(q=>q.g==='ut'&&o[q.k]===own).length;F.amt=F.dice*(n>1?10:4);const big=$('#sheet .big');if(big)big.innerHTML=money(F.amt)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+setInterval(()=>{if(S.code&&!$('#sheet').classList.contains('on'))render()},30000);
+boot();
+}
+</script>
+</body>
+</html>
